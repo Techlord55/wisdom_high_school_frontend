@@ -12,10 +12,10 @@ const isPublicRoute = createRouteMatcher([
   '/api/webhooks(.*)',
 ]);
 
-export default clerkMiddleware(async (auth, req) => {
+export default clerkMiddleware((auth, request) => {
   // Protect all routes except public ones
-  if (!isPublicRoute(req)) {
-    await auth.protect();
+  if (!isPublicRoute(request)) {
+    auth().protect();
   }
 });
 
@@ -26,5 +26,4 @@ export const config = {
     // Always run for API routes
     '/(api|trpc)(.*)',
   ],
-  runtime: 'nodejs',
 };
